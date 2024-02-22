@@ -1,5 +1,5 @@
 <div class="layout-topbar">
-    <a class="layout-topbar-logo" routerLink="">
+    <a class="layout-topbar-logo" routerLink="/demo">
         <img
             src="assets/layout/images/{{
                 layoutService.config().colorScheme === 'light'
@@ -45,7 +45,7 @@
         </button>
         <button
             class="p-link layout-topbar-button"
-            [routerLink]="'/documentation'"
+            [routerLink]="'/'"
         >
             <i class="pi pi-cog"></i>
             <span>Settings</span>

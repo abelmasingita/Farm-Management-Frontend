@@ -19,7 +19,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Dashboard',
                         icon: 'pi pi-fw pi-home',
-                        routerLink: ['/'],
+                        routerLink: ['/demo'],
                     },
                 ],
             },
@@ -29,13 +29,13 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'List',
                         icon: 'pi pi-fw pi-list',
-                        routerLink: ['/uikit/list'],
+                        routerLink: ['/demo/uikit/list'],
                     },
 
                     {
                         label: 'Message',
                         icon: 'pi pi-fw pi-comment',
-                        routerLink: ['/uikit/message'],
+                        routerLink: ['/demo/uikit/message'],
                     },
                 ],
             },
@@ -45,7 +45,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Free Blocks',
                         icon: 'pi pi-fw pi-eye',
-                        routerLink: ['/blocks'],
+                        routerLink: ['/demo/blocks'],
                         badge: 'NEW',
                     },
                     {
@@ -62,7 +62,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'PrimeIcons',
                         icon: 'pi pi-fw pi-prime',
-                        routerLink: ['/utilities/icons'],
+                        routerLink: ['/demo/utilities/icons'],
                     },
                     {
                         label: 'PrimeFlex',
@@ -84,7 +84,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Empty',
                         icon: 'pi pi-fw pi-circle-off',
-                        routerLink: ['/pages/empty'],
+                        routerLink: ['/demo/pages/empty'],
                     },
                 ],
             },
@@ -129,7 +129,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Documentation',
                         icon: 'pi pi-fw pi-question',
-                        routerLink: ['/documentation'],
+                        routerLink: ['/demo/documentation'],
                     },
                 ],
             },
@@ -139,7 +139,7 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Documentation',
                         icon: 'pi pi-fw pi-question',
-                        routerLink: ['/documentation'],
+                        routerLink: ['/demo/documentation'],
                     },
                 ],
             },
