@@ -24,126 +24,177 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
-                label: 'Farm Management',
                 items: [
                     {
-                        label: 'Farm List',
-                        icon: 'pi pi-fw pi-list',
-                        routerLink: ['/demo/farm-management/'],
-                    },
-                    {
-                        label: 'Field List',
-                        icon: 'pi pi-fw pi-list',
-                        routerLink: ['/demo/field-management/'],
-                    },
-                    {
-                        label: 'Crop Management',
-                        icon: 'pi pi-fw pi-list',
-                        routerLink: ['/demo/crop-management/'],
-                    },
-                ],
-            },
-            {
-                label: 'Employee Management',
-                items: [
-                    {
-                        label: 'Free Blocks',
-                        icon: 'pi pi-fw pi-eye',
-                        routerLink: ['/demo/blocks'],
-                        badge: 'NEW',
-                    },
-                    {
-                        label: 'All Blocks',
-                        icon: 'pi pi-fw pi-globe',
-                        url: ['https://www.primefaces.org/primeblocks-ng'],
-                        target: '_blank',
-                    },
-                ],
-            },
-            {
-                label: 'Equipment Management',
-                items: [
-                    {
-                        label: 'PrimeIcons',
-                        icon: 'pi pi-fw pi-prime',
-                        routerLink: ['/demo/utilities/icons'],
-                    },
-                    {
-                        label: 'PrimeFlex',
-                        icon: 'pi pi-fw pi-desktop',
-                        url: ['https://www.primefaces.org/primeflex/'],
-                        target: '_blank',
-                    },
-                ],
-            },
-            {
-                label: 'Expense Tracking',
-                icon: 'pi pi-fw pi-briefcase',
-                items: [
-                    {
-                        label: 'Not Found',
-                        icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/notfound'],
-                    },
-                    {
-                        label: 'Empty',
-                        icon: 'pi pi-fw pi-circle-off',
-                        routerLink: ['/demo/pages/empty'],
-                    },
-                ],
-            },
-            {
-                label: 'Reporting',
-                items: [
-                    {
-                        label: 'Submenu 2',
-                        icon: 'pi pi-fw pi-bookmark',
+                        label: 'Farm Management',
+                        icon: 'pi pi-sliders-h',
                         items: [
                             {
-                                label: 'Submenu 2.1',
-                                icon: 'pi pi-fw pi-bookmark',
-                                items: [
-                                    {
-                                        label: 'Submenu 2.1.1',
-                                        icon: 'pi pi-fw pi-bookmark',
-                                    },
-                                    {
-                                        label: 'Submenu 2.1.2',
-                                        icon: 'pi pi-fw pi-bookmark',
-                                    },
-                                ],
+                                label: 'Farm List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/farm-management/'],
                             },
                             {
-                                label: 'Submenu 2.2',
-                                icon: 'pi pi-fw pi-bookmark',
-                                items: [
-                                    {
-                                        label: 'Submenu 2.2.1',
-                                        icon: 'pi pi-fw pi-bookmark',
-                                    },
-                                ],
+                                label: 'Field List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/field-management/'],
+                            },
+                            {
+                                label: 'Crop Management',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/crop-management/'],
                             },
                         ],
                     },
                 ],
             },
             {
-                label: 'Settings',
                 items: [
                     {
-                        label: 'Documentation',
-                        icon: 'pi pi-fw pi-question',
-                        routerLink: ['/demo/documentation'],
+                        label: 'Employee Management',
+                        icon: 'pi pi-user-edit',
+                        items: [
+                            {
+                                label: 'Farm List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/farm-management/'],
+                            },
+                            {
+                                label: 'Field List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/field-management/'],
+                            },
+                            {
+                                label: 'Crop Management',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/crop-management/'],
+                            },
+                        ],
                     },
                 ],
             },
             {
-                label: 'System Administration',
                 items: [
                     {
-                        label: 'Documentation',
-                        icon: 'pi pi-fw pi-question',
-                        routerLink: ['/demo/documentation'],
+                        label: 'Equipment Management',
+                        icon: 'pi pi-book',
+                        items: [
+                            {
+                                label: 'Farm List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/farm-management/'],
+                            },
+                            {
+                                label: 'Field List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/field-management/'],
+                            },
+                            {
+                                label: 'Crop Management',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/crop-management/'],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                items: [
+                    {
+                        label: 'Expense Tracking',
+                        icon: 'pi pi-pencil',
+                        items: [
+                            {
+                                label: 'Farm List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/farm-management/'],
+                            },
+                            {
+                                label: 'Field List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/field-management/'],
+                            },
+                            {
+                                label: 'Crop Management',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/crop-management/'],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                items: [
+                    {
+                        label: 'Reporting',
+                        icon: 'pi pi-chart-bar',
+                        items: [
+                            {
+                                label: 'Farm List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/farm-management/'],
+                            },
+                            {
+                                label: 'Field List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/field-management/'],
+                            },
+                            {
+                                label: 'Crop Management',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/crop-management/'],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                items: [
+                    {
+                        label: 'Settings',
+                        icon: 'pi pi-briefcase',
+                        items: [
+                            {
+                                label: 'Farm List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/farm-management/'],
+                            },
+                            {
+                                label: 'Field List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/field-management/'],
+                            },
+                            {
+                                label: 'Crop Management',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/crop-management/'],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                items: [
+                    {
+                        label: 'Administration',
+                        icon: 'pi pi-users',
+                        items: [
+                            {
+                                label: 'Farm List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/farm-management/'],
+                            },
+                            {
+                                label: 'Field List',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/field-management/'],
+                            },
+                            {
+                                label: 'Crop Management',
+                                icon: 'pi pi-circle',
+                                routerLink: ['/demo/crop-management/'],
+                            },
+                        ],
                     },
                 ],
             },
