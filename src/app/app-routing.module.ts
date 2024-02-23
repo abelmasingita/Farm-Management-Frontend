@@ -19,39 +19,25 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                                 ).then((m) => m.DashboardModule),
                         },
                         {
-                            path: 'uikit',
+                            path: 'farm-management',
                             loadChildren: () =>
                                 import(
-                                    './demo/components/uikit/uikit.module'
-                                ).then((m) => m.UIkitModule),
+                                    './demo/components/farm-management/farmlist/farmlist.module'
+                                ).then((m) => m.FarmListModule),
                         },
                         {
-                            path: 'utilities',
+                            path: 'field-management',
                             loadChildren: () =>
                                 import(
-                                    './demo/components/utilities/utilities.module'
-                                ).then((m) => m.UtilitiesModule),
+                                    './demo/components/farm-management/fieldlist/fieldlist.module'
+                                ).then((m) => m.FieldListModule),
                         },
                         {
-                            path: 'documentation',
+                            path: 'crop-management',
                             loadChildren: () =>
                                 import(
-                                    './demo/components/documentation/documentation.module'
-                                ).then((m) => m.DocumentationModule),
-                        },
-                        {
-                            path: 'blocks',
-                            loadChildren: () =>
-                                import(
-                                    './demo/components/primeblocks/primeblocks.module'
-                                ).then((m) => m.PrimeBlocksModule),
-                        },
-                        {
-                            path: 'pages',
-                            loadChildren: () =>
-                                import(
-                                    './demo/components/pages/pages.module'
-                                ).then((m) => m.PagesModule),
+                                    './demo/components/farm-management/cropmanagement/cropmanagement.module'
+                                ).then((m) => m.CropManagementListModule),
                         },
                     ],
                 },

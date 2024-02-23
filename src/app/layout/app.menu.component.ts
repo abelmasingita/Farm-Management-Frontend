@@ -27,15 +27,19 @@ export class AppMenuComponent implements OnInit {
                 label: 'Farm Management',
                 items: [
                     {
-                        label: 'List',
+                        label: 'Farm List',
                         icon: 'pi pi-fw pi-list',
-                        routerLink: ['/demo/uikit/list'],
+                        routerLink: ['/demo/farm-management/'],
                     },
-
                     {
-                        label: 'Message',
-                        icon: 'pi pi-fw pi-comment',
-                        routerLink: ['/demo/uikit/message'],
+                        label: 'Field List',
+                        icon: 'pi pi-fw pi-list',
+                        routerLink: ['/demo/field-management/'],
+                    },
+                    {
+                        label: 'Crop Management',
+                        icon: 'pi pi-fw pi-list',
+                        routerLink: ['/demo/crop-management/'],
                     },
                 ],
             },
