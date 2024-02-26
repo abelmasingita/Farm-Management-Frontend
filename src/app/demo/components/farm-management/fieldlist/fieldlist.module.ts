@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FieldListRoutingModule } from './fieldlist-routing.module';
 import { FieldlistComponent } from './fieldlist.component';
+import { FieldListRoutingModule } from './fieldlist-routing.module';
 
 @NgModule({
     imports: [CommonModule, FieldListRoutingModule],

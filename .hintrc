@@ -24,6 +24,7 @@
         "listitem": "off"
       }
     ],
-    "disown-opener": "off"
+    "disown-opener": "off",
+    "typescript-config/strict": "off"
   }
 }
