@@ -4,5 +4,5 @@ export interface IFarm {
     owner?: string;
     contactInformation?: string;
     size?: number;
-    _id?: number;
+    _id?: string;
 }

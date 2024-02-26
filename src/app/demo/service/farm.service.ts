@@ -6,17 +6,23 @@ import { IFarm } from '../utils/IFarm';
     providedIn: 'root',
 })
 export class FarmService {
+    private BaseUrl: string =
+        'https://farm-management-sys-backend.onrender.com';
     constructor(private http: HttpClient) {}
 
     getFams() {
-        return this.http.get<IFarm[]>(
-            'https://farm-management-sys-backend.onrender.com/api/farm'
-        );
+        return this.http.get<IFarm[]>(`${this.BaseUrl}/api/farm`);
     }
 
     deleteFarm(id: string) {
-        return this.http.delete(
-            `https://farm-management-sys-backend.onrender.com/api/farm/${id}`
-        );
+        return this.http.delete(`${this.BaseUrl}/api/farm/${id}`);
+    }
+
+    createFarm(payload: IFarm) {
+        return this.http.post(`${this.BaseUrl}/api/farm`, payload);
+    }
+
+    updateFarm(id: string, payload: IFarm) {
+        return this.http.put(`${this.BaseUrl}/api/farm/${id}`, payload);
     }
 }

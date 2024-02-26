@@ -58,8 +58,6 @@ export class FarmlistComponent implements OnInit {
     editFarm(farm: IFarm) {
         this.farm = { ...farm };
         this.farmDialog = true;
-
-        console.log('Edit Farm :: ', farm);
     }
 
     deleteFarm(farm: IFarm) {
@@ -83,7 +81,7 @@ export class FarmlistComponent implements OnInit {
 
     confirmDelete() {
         this.deleteFarmDialog = false;
-        this.farmService.deleteFarm(this.farm._id.toString()).subscribe();
+        this.farmService.deleteFarm(this.farm._id).subscribe();
 
         this.farms = this.farms.filter((val) => val?._id !== this.farm._id);
         this.messageService.add({
@@ -100,69 +98,37 @@ export class FarmlistComponent implements OnInit {
         this.submitted = false;
     }
 
-    /*saveFarm() {
+    saveFarm() {
         this.submitted = true;
 
         if (this.farm.name?.trim()) {
             if (this.farm._id) {
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus
-                    .value
-                    ? this.farm.inventoryStatus.value
-                    : this.product.inventoryStatus;
-                this.products[this.findIndexById(this.product.id)] =
-                    this.product;
+                this.farmService
+                    .updateFarm(this.farm._id.toString(), this.farm)
+                    .subscribe();
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
-                    detail: 'Product Updated',
+                    detail: 'Farm Updated',
                     life: 3000,
                 });
             } else {
-                this.product.id = this.createId();
-                this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
+                this.farmService.createFarm(this.farm).subscribe();
+
                 // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus
-                    ? this.product.inventoryStatus.value
-                    : 'INSTOCK';
-                this.products.push(this.product);
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
-                    detail: 'Product Created',
+                    detail: 'Farm Created',
                     life: 3000,
                 });
             }
 
-            this.products = [...this.products];
+            this.farms = [...this.farms];
             this.farmDialog = false;
-            this.product = {};
+            this.farm = {};
         }
-    }*/
-
-    /*findIndexById(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.farms.length; i++) {
-            if (this.farms[i]._id === id) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    }*/
-
-    createId(): string {
-        let id = '';
-        const chars =
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
     }
-
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal(
             (event.target as HTMLInputElement).value,
