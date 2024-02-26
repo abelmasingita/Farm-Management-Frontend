@@ -11,9 +11,6 @@ export class FarmService {
     constructor(private http: HttpClient) {}
 
     getFams() {
-
-        console.log('Env ::', process.env['BaseUrl']);
-        
         return this.http.get<IFarm[]>(`${this.BaseUrl}/api/farm`);
     }
 
