@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/demo/service/product.service';
+import { CropService } from 'src/app/demo/service/crop.service';
+import { ICrop } from 'src/app/demo/utils/IFarm.Management';
 
 @Component({
     templateUrl: './cropmanagement.component.html',
     providers: [MessageService],
 })
 export class CropmanagementComponent implements OnInit {
-    productDialog: boolean = false;
+    CropDialog: boolean = false;
 
-    deleteProductDialog: boolean = false;
+    deleteCropDialog: boolean = false;
 
-    deleteProductsDialog: boolean = false;
+    deleteCropsDialog: boolean = false;
 
-    products: Product[] = [];
+    crops: ICrop[] = [];
 
-    product: Product = {};
+    crop: ICrop = {};
 
-    selectedProducts: Product[] = [];
+    selectedcrops: ICrop[] = [];
 
     submitted: boolean = false;
 
@@ -30,144 +30,103 @@ export class CropmanagementComponent implements OnInit {
     rowsPerPageOptions = [5, 10, 20];
 
     constructor(
-        private productService: ProductService,
+        private cropservice: CropService,
         private messageService: MessageService
     ) {}
 
     ngOnInit() {
-        this.productService
-            .getProducts()
-            .then((data) => (this.products = data));
+        this.cropservice.getCrops().subscribe((data) => (this.crops = data));
 
         this.cols = [
-            { field: 'product', header: 'Product' },
+            { field: 'Crop', header: 'Crop' },
             { field: 'price', header: 'Price' },
             { field: 'category', header: 'Category' },
             { field: 'rating', header: 'Reviews' },
             { field: 'inventoryStatus', header: 'Status' },
         ];
-
-        this.statuses = [
-            { label: 'INSTOCK', value: 'instock' },
-            { label: 'LOWSTOCK', value: 'lowstock' },
-            { label: 'OUTOFSTOCK', value: 'outofstock' },
-        ];
     }
 
     openNew() {
-        this.product = {};
+        this.crop = {};
         this.submitted = false;
-        this.productDialog = true;
+        this.CropDialog = true;
     }
 
-    deleteSelectedProducts() {
-        this.deleteProductsDialog = true;
+    deleteSelectedcrops() {
+        this.deleteCropsDialog = true;
     }
 
-    editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
+    editCrop(Crop: ICrop) {
+        this.crop = { ...Crop };
+        this.CropDialog = true;
     }
 
-    deleteProduct(product: Product) {
-        this.deleteProductDialog = true;
-        this.product = { ...product };
+    deleteCrop(Crop: ICrop) {
+        this.deleteCropDialog = true;
+        this.crop = { ...Crop };
     }
 
     confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
-        this.products = this.products.filter(
-            (val) => !this.selectedProducts.includes(val)
+        this.deleteCropsDialog = false;
+        this.crops = this.crops.filter(
+            (val) => !this.selectedcrops.includes(val)
         );
         this.messageService.add({
             severity: 'success',
             summary: 'Successful',
-            detail: 'Products Deleted',
+            detail: 'crops Deleted',
             life: 3000,
         });
-        this.selectedProducts = [];
+        this.selectedcrops = [];
     }
 
     confirmDelete() {
-        this.deleteProductDialog = false;
-        this.products = this.products.filter(
-            (val) => val.id !== this.product.id
-        );
+        this.deleteCropDialog = false;
+        this.cropservice.deleteCrop(this.crop._id).subscribe();
+        this.crops = this.crops.filter((val) => val._id !== this.crop._id);
         this.messageService.add({
             severity: 'success',
             summary: 'Successful',
-            detail: 'Product Deleted',
+            detail: 'Crop Deleted',
             life: 3000,
         });
-        this.product = {};
+        this.crop = {};
     }
 
     hideDialog() {
-        this.productDialog = false;
+        this.CropDialog = false;
         this.submitted = false;
     }
 
-    saveProduct() {
+    saveCrop() {
         this.submitted = true;
 
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
+        if (this.crop.name?.trim()) {
+            if (this.crop._id) {
                 // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus
-                    .value
-                    ? this.product.inventoryStatus.value
-                    : this.product.inventoryStatus;
-                this.products[this.findIndexById(this.product.id)] =
-                    this.product;
+                this.cropservice
+                    .updateCrop(this.crop._id, this.crop)
+                    .subscribe();
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
-                    detail: 'Product Updated',
+                    detail: 'Crop Updated',
                     life: 3000,
                 });
             } else {
-                this.product.id = this.createId();
-                this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus
-                    ? this.product.inventoryStatus.value
-                    : 'INSTOCK';
-                this.products.push(this.product);
+                this.cropservice.createCrop(this.crop).subscribe();
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
-                    detail: 'Product Created',
+                    detail: 'Crop Created',
                     life: 3000,
                 });
             }
 
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {};
+            this.crops = [...this.crops];
+            this.CropDialog = false;
+            this.crop = {};
         }
-    }
-
-    findIndexById(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    }
-
-    createId(): string {
-        let id = '';
-        const chars =
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
     }
 
     onGlobalFilter(table: Table, event: Event) {

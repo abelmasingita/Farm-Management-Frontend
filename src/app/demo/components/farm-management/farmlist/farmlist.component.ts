@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/demo/service/product.service';
 import { FarmService } from 'src/app/demo/service/farm.service';
-import { IFarm } from 'src/app/demo/utils/IFarm';
+import { IFarm } from 'src/app/demo/utils/IFarm.Management';
 
 @Component({
     templateUrl: './farmlist.component.html',
@@ -104,7 +102,7 @@ export class FarmlistComponent implements OnInit {
         if (this.farm.name?.trim()) {
             if (this.farm._id) {
                 this.farmService
-                    .updateFarm(this.farm._id.toString(), this.farm)
+                    .updateFarm(this.farm._id, this.farm)
                     .subscribe();
                 this.messageService.add({
                     severity: 'success',

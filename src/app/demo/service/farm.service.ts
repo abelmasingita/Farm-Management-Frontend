@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IFarm } from '../utils/IFarm';
+import { IFarm } from '../utils/IFarm.Management';
 
 @Injectable({
     providedIn: 'root',
