@@ -39,6 +39,20 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                                     './demo/components/farm-management/cropmanagement/cropmanagement.module'
                                 ).then((m) => m.CropManagementListModule),
                         },
+                        {
+                            path: 'employeelist',
+                            loadChildren: () =>
+                                import(
+                                    './demo/components/employee-management/employeelist/farmlist.module'
+                                ).then((m) => m.FarmListModule),
+                        },
+                        {
+                            path: 'task',
+                            loadChildren: () =>
+                                import(
+                                    './demo/components/employee-management/task/task.module'
+                                ).then((m) => m.TaskModule),
+                        },
                     ],
                 },
                 {
