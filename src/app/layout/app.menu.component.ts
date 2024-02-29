@@ -57,14 +57,12 @@ export class AppMenuComponent implements OnInit {
                             {
                                 label: 'Employee',
                                 icon: 'pi pi-circle',
-                                routerLink: [
-                                    '/demo/employee-management/employeelist/',
-                                ],
+                                routerLink: ['/demo/employee-management'],
                             },
                             {
                                 label: 'Task',
                                 icon: 'pi pi-circle',
-                                routerLink: ['/demo/task-management/'],
+                                routerLink: ['/demo/task-management'],
                             },
                         ],
                     },

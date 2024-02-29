@@ -5,10 +5,10 @@ import { FarmService } from 'src/app/demo/service/farm.service';
 import { IFarm } from 'src/app/demo/utils/IFarm.Management';
 
 @Component({
-    templateUrl: './farmlist.component.html',
+    templateUrl: './employee.component.html',
     providers: [MessageService],
 })
-export class FarmlistComponent implements OnInit {
+export class EmployeeComponent implements OnInit {
     farms: IFarm[] = [];
     farm: IFarm = {};
 

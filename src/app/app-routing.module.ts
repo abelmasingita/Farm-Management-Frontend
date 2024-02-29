@@ -40,14 +40,14 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                                 ).then((m) => m.CropManagementListModule),
                         },
                         {
-                            path: 'employeelist',
+                            path: 'employee-management',
                             loadChildren: () =>
                                 import(
-                                    './demo/components/employee-management/employeelist/farmlist.module'
-                                ).then((m) => m.FarmListModule),
+                                    './demo/components/employee-management/employee/employee.module'
+                                ).then((m) => m.EmployeeModule),
                         },
                         {
-                            path: 'task',
+                            path: 'task-management',
                             loadChildren: () =>
                                 import(
                                     './demo/components/employee-management/task/task.module'

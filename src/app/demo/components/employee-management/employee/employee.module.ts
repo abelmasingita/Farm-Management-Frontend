@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FarmListRoutingModule } from './farmlist-routing.module';
-import { FarmlistComponent } from './farmlist.component';
+import { EmployeeRoutingModule } from './employee-routing.module';
+import { EmployeeComponent } from './employee.component';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -19,7 +19,7 @@ import { DialogModule } from 'primeng/dialog';
 @NgModule({
     imports: [
         CommonModule,
-        FarmListRoutingModule,
+        EmployeeRoutingModule,
         TableModule,
         FileUploadModule,
         FormsModule,
@@ -35,6 +35,6 @@ import { DialogModule } from 'primeng/dialog';
         InputNumberModule,
         DialogModule,
     ],
-    declarations: [FarmlistComponent],
+    declarations: [EmployeeComponent],
 })
-export class FarmListModule {}
+export class EmployeeModule {}

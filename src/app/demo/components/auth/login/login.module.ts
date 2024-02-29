@@ -7,6 +7,9 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SpinnerComponent } from '../../loader/spinner/spinner.component';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
     imports: [
@@ -16,8 +19,10 @@ import { InputTextModule } from 'primeng/inputtext';
         CheckboxModule,
         InputTextModule,
         FormsModule,
-        PasswordModule
+        PasswordModule,
+        ProgressSpinnerModule,
+        ToastModule,
     ],
-    declarations: [LoginComponent]
+    declarations: [LoginComponent, SpinnerComponent],
 })
-export class LoginModule { }
+export class LoginModule {}
