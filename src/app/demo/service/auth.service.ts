@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, tap, throwError } from 'rxjs';
 import { SessionService } from './session.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
     providedIn: 'root',
@@ -9,8 +10,13 @@ import { SessionService } from './session.service';
 export class AuthService {
     private BaseUrl: string =
         'https://farm-management-sys-backend.onrender.com';
+    private isLoggedIn: boolean = false;
 
-    constructor(private http: HttpClient, private session: SessionService) {}
+    constructor(
+        private http: HttpClient,
+        private session: SessionService,
+        private cookieService: CookieService
+    ) {}
 
     login(credentials: { username: string; password: string }) {
         return this.http
@@ -19,19 +25,29 @@ export class AuthService {
             })
             .pipe(
                 tap(() => {
+                    this.isLoggedIn = true;
                     this.session.startSessionTimer();
                 }),
                 catchError((error) => {
+                    this.isLoggedIn = false;
                     return throwError(error);
                 })
             );
     }
 
     logout() {
-        return this.http.post('/api/logout', {}, { withCredentials: true });
+        this.isLoggedIn = false;
+        this.cookieService.deleteAll();
     }
 
-    isAuthenticated() {
-        return true;
+    isAuthenticated(): boolean {
+        const jwt = this.cookieService.get('jwt');
+
+        if (jwt != null) {
+            this.isLoggedIn = true;
+        } else {
+            this.isLoggedIn = false;
+        }
+        return !!this.isLoggedIn;
     }
 }
