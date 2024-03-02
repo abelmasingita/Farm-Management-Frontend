@@ -43,7 +43,7 @@ export class AuthService {
     isAuthenticated(): boolean {
         const jwt = this.cookieService.get('jwt');
 
-        if (jwt != null) {
+        if (jwt != null && jwt !== '') {
             this.isLoggedIn = true;
         } else {
             this.isLoggedIn = false;
