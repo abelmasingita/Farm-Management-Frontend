@@ -13,6 +13,11 @@ import { PhotoService } from './demo/service/photo.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './demo/service/authInterceptor.service';
 import { SessionInterceptor } from './demo/service/sessionInterceptor.service';
+import { AuthService } from './demo/service/auth.service';
+import { CropService } from './demo/service/crop.service';
+import { FarmService } from './demo/service/farm.service';
+import { FieldService } from './demo/service/field.service';
+import { SessionService } from './demo/service/session.service';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -31,6 +36,11 @@ import { SessionInterceptor } from './demo/service/sessionInterceptor.service';
         NodeService,
         PhotoService,
         ProductService,
+        AuthService,
+        CropService,
+        FarmService,
+        FieldService,
+        SessionService,
     ],
     bootstrap: [AppComponent],
 })

@@ -3,6 +3,12 @@ import { AuthService } from 'src/app/demo/service/auth.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { CookieService } from 'ngx-cookie-service';
+
+interface LoginResponse {
+    token: string;
+    message: string;
+}
 
 @Component({
     selector: 'app-login',
@@ -29,7 +35,8 @@ export class LoginComponent {
         public layoutService: LayoutService,
         private authService: AuthService,
         private router: Router,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private cookieService: CookieService
     ) {}
 
     login() {
@@ -40,12 +47,12 @@ export class LoginComponent {
                 password: this.password,
             })
             .subscribe(
-                (res) => {
+                (res: LoginResponse) => {
+                    this.cookieService.set('jwt', res?.token);
                     this.loading = false;
                     this.router.navigate(['/demo']);
                 },
                 (err) => {
-                    console.error('Error :: ', err.error.message);
                     this.loading = false;
                     this.messageService.add({
                         severity: 'error',

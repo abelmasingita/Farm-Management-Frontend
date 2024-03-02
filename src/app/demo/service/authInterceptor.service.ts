@@ -17,13 +17,9 @@ export class AuthInterceptor implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         const jwt = this.cookieService.get('jwt');
-        console.log('All Cookies:', document.cookie);
-        console.log('token :: ', jwt);
         if (jwt) {
             request = request.clone({
-                setHeaders: {
-                    Authorization: `Bearer ${jwt}`,
-                },
+                headers: request.headers.set('Authorization', 'Bearer ' + jwt),
             });
         }
         return next.handle(request);
