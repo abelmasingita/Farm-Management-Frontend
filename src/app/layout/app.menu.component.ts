@@ -175,19 +175,14 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-users',
                         items: [
                             {
-                                label: 'Farm List',
+                                label: 'User Management',
                                 icon: 'pi pi-circle',
-                                routerLink: ['/demo/farm-management/'],
+                                routerLink: ['/demo/user-management/'],
                             },
                             {
-                                label: 'Field List',
+                                label: 'Roles',
                                 icon: 'pi pi-circle',
-                                routerLink: ['/demo/field-management/'],
-                            },
-                            {
-                                label: 'Crop Management',
-                                icon: 'pi pi-circle',
-                                routerLink: ['/demo/crop-management/'],
+                                routerLink: ['/demo/role-management/'],
                             },
                         ],
                     },

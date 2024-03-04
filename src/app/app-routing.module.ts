@@ -55,6 +55,20 @@ import { AuthGuard } from './demo/guards/auth.guard';
                                     './demo/components/employee-management/task/task.module'
                                 ).then((m) => m.TaskModule),
                         },
+                        {
+                            path: 'user-management',
+                            loadChildren: () =>
+                                import(
+                                    './demo/components/user-management/user/user.module'
+                                ).then((m) => m.UserModule),
+                        },
+                        {
+                            path: 'role-management',
+                            loadChildren: () =>
+                                import(
+                                    './demo/components/user-management/role/role.module'
+                                ).then((m) => m.RoleModule),
+                        },
                     ],
                 },
                 {
