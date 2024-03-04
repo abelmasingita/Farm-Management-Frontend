@@ -70,18 +70,38 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="UserDialog" [style]="{width: '450px'}" header="Crop Details" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="UserDialog" [style]="{width: '450px'}" header="User Details" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
                 <div class="field">
                     <label for="firstName">First Name</label>
                     <input type="text" pInputText id="firstName" [(ngModel)]="user.firstName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.firstName}"/>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.firstName">First Name is required.</small>
                 </div>
+                <div class="field">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" pInputText id="lastName" [(ngModel)]="user.lastName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.lastName}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.lastName">Last Name is required.</small>
+                </div>
+                <div class="field">
+                    <label for="roleId">Role</label>      
+                    <p-dropdown id="roleId" [options]="roles" [(ngModel)]="role" optionLabel="name" [showClear]="true" placeholder="Select a Role"></p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="username">Email</label>
+                    <input disabled type="text" pInputText id="username" [(ngModel)]="user.username" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.username}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.username">Email is required.</small>
+                </div>
+                <div class="field">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="text" pInputText id="phoneNumber" [(ngModel)]="user.phoneNumber" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.phoneNumber}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.phoneNumber">Phone Number is required.</small>
+                </div>
+
             </ng-template>
         
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveCrop()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveUser()"></button>
             </ng-template>
         </p-dialog>
 
@@ -95,16 +115,5 @@
                 <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
             </ng-template>
         </p-dialog>
-
-        <p-dialog [(visible)]="deleteSelectedUsers" header="Confirm" [modal]="true" [style]="{width:'450px'}">
-            <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected users?</span>
-            </div>
-            <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteUserDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
-            </ng-template>
-        </p-dialog> 
     </div>
 </div>

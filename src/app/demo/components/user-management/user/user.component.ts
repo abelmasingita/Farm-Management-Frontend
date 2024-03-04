@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { UserService } from 'src/app/demo/service/user.service';
-import { IUser } from 'src/app/demo/utils/IUser.Management';
+import { IRole, IUser } from 'src/app/demo/utils/IUser.Management';
 
 @Component({
     templateUrl: './user.component.html',
@@ -16,9 +16,9 @@ export class UserComponent implements OnInit {
     deleteUsersDialog: boolean = false;
 
     users: IUser[] = [];
-
+    roles: IRole[] = [];
     user: IUser = {};
-
+    role: IRole = {};
     selectedUsers: IUser[] = [];
 
     submitted: boolean = false;
@@ -36,6 +36,7 @@ export class UserComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getUsers().subscribe((data) => (this.users = data));
+        this.userService.getRoles().subscribe((data) => (this.roles = data));
 
         this.cols = [
             { field: 'firstName', header: 'Name' },
@@ -98,9 +99,9 @@ export class UserComponent implements OnInit {
         this.submitted = false;
     }
 
-    saveuser() {
+    saveUser() {
         this.submitted = true;
-
+        this.user.roleId = this.role._id;
         if (this.user.username?.trim()) {
             if (this.user._id) {
                 // @ts-ignore
@@ -110,7 +111,7 @@ export class UserComponent implements OnInit {
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
-                    detail: 'user Updated',
+                    detail: 'User Updated',
                     life: 3000,
                 });
             } else {
@@ -118,7 +119,7 @@ export class UserComponent implements OnInit {
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
-                    detail: 'user Created',
+                    detail: 'User Created',
                     life: 3000,
                 });
             }

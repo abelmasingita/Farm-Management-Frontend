@@ -2,10 +2,10 @@
     <div class="col-12">
         <div class="card px-6 py-6">
 
-            <p-table #dt [value]="roles" [columns]="cols" responsiveLayout="scroll" [rows]="10"  [rowHover]="true" dataKey="id">
+            <p-table #dt [value]="roles" [columns]="cols" responsiveLayout="scroll"  [rowHover]="true" dataKey="_id">
                 <ng-template pTemplate="caption">
-                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Role Management</h5>
+                    <div >
+                        <h5 class="m-">Role Management</h5>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">

@@ -19,7 +19,8 @@ export class UserService {
     }
 
     createUser(payload: IUser) {
-        return this.http.post(`${this.BaseUrl}/api/user`, payload);
+        console.log('Create :: ', payload);
+        return this.http.post(`${this.BaseUrl}/api/auth/register`, payload);
     }
 
     updateUser(id: string, payload: IUser) {
