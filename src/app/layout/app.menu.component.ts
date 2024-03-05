@@ -217,6 +217,17 @@ export class AppMenuComponent implements OnInit {
                     },
                 ],
             },
+            {
+                items: [
+                    {
+                        label: 'Log Out',
+                        icon: 'pi pi-sign-out',
+                        command: (event) => {
+                            this.logout();
+                        },
+                    },
+                ],
+            },
         ];
 
         this.model = this.filterMenuByRole(menuModel, userRole);
@@ -233,5 +244,9 @@ export class AppMenuComponent implements OnInit {
             }
             return true;
         });
+    }
+
+    logout() {
+        this.authService.logout();
     }
 }

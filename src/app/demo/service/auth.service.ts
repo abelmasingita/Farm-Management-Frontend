@@ -5,6 +5,7 @@ import { SessionService } from './session.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Roles } from '../utils/IUser.Management';
 import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -17,7 +18,8 @@ export class AuthService {
     constructor(
         private http: HttpClient,
         private session: SessionService,
-        private cookieService: CookieService
+        private cookieService: CookieService,
+        private router: Router
     ) {}
 
     login(credentials: { username: string; password: string }) {
@@ -40,6 +42,7 @@ export class AuthService {
     logout() {
         this.isLoggedIn = false;
         this.cookieService.deleteAll();
+        this.router.navigate(['/auth/login']);
     }
 
     isAuthenticated(): boolean {
