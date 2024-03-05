@@ -2,6 +2,7 @@ import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
 import { Roles } from '../demo/utils/IUser.Management';
+import { AuthService } from '../demo/service/auth.service';
 
 @Component({
     selector: 'app-menu',
@@ -10,18 +11,25 @@ import { Roles } from '../demo/utils/IUser.Management';
 export class AppMenuComponent implements OnInit {
     model: any[] = [];
 
-    constructor(public layoutService: LayoutService) {}
+    constructor(
+        public layoutService: LayoutService,
+        private authService: AuthService
+    ) {}
 
     ngOnInit() {
-        this.model = [
+        const userRole = this.authService.getUserRole();
+        const menuModel = [
             {
-                label: 'Home',
                 items: [
                     {
                         label: 'Dashboard',
                         icon: 'pi pi-fw pi-home',
                         routerLink: ['/demo'],
-                        roles: [Roles.ADMINISTRATOR],
+                        roles: [
+                            Roles.ADMINISTRATOR,
+                            Roles.MANAGER,
+                            Roles.EMPLOYEE,
+                        ],
                     },
                 ],
             },
@@ -30,24 +38,26 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Farm Management',
                         icon: 'pi pi-sliders-h',
+                        roles: [
+                            Roles.ADMINISTRATOR,
+                            Roles.MANAGER,
+                            Roles.EMPLOYEE,
+                        ],
                         items: [
                             {
                                 label: 'Farm List',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/farm-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Field List',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/field-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Crop Management',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/crop-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                         ],
                     },
@@ -58,18 +68,21 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Employee Management',
                         icon: 'pi pi-user-edit',
+                        roles: [
+                            Roles.ADMINISTRATOR,
+                            Roles.MANAGER,
+                            Roles.EMPLOYEE,
+                        ],
                         items: [
                             {
                                 label: 'Employee',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/employee-management'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Task',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/task-management'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                         ],
                     },
@@ -80,24 +93,26 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Equipment Management',
                         icon: 'pi pi-book',
+                        roles: [
+                            Roles.ADMINISTRATOR,
+                            Roles.MANAGER,
+                            Roles.EMPLOYEE,
+                        ],
                         items: [
                             {
                                 label: 'Farm List',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/farm-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Field List',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/field-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Crop Management',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/crop-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                         ],
                     },
@@ -108,24 +123,22 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Expense Tracking',
                         icon: 'pi pi-pencil',
+                        roles: [Roles.ADMINISTRATOR, Roles.MANAGER],
                         items: [
                             {
                                 label: 'Farm List',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/farm-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Field List',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/field-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Crop Management',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/crop-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                         ],
                     },
@@ -136,24 +149,22 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Reporting',
                         icon: 'pi pi-chart-bar',
+                        roles: [Roles.ADMINISTRATOR, Roles.MANAGER],
                         items: [
                             {
                                 label: 'Farm List',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/farm-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Field List',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/field-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Crop Management',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/crop-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                         ],
                     },
@@ -164,24 +175,22 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Settings',
                         icon: 'pi pi-briefcase',
+                        roles: [Roles.ADMINISTRATOR, Roles.MANAGER],
                         items: [
                             {
                                 label: 'Farm List',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/farm-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Field List',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/field-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Crop Management',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/crop-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                         ],
                     },
@@ -192,23 +201,37 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Administration',
                         icon: 'pi pi-users',
+                        roles: [Roles.ADMINISTRATOR],
                         items: [
                             {
                                 label: 'User Management',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/user-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                             {
                                 label: 'Roles',
                                 icon: 'pi pi-circle',
                                 routerLink: ['/demo/role-management/'],
-                                roles: [Roles.ADMINISTRATOR],
                             },
                         ],
                     },
                 ],
             },
         ];
+
+        this.model = this.filterMenuByRole(menuModel, userRole);
+    }
+
+    private filterMenuByRole(menu: any[], role: string): any[] {
+        return menu.filter((item) => {
+            if (item.roles && !item.roles.includes(role)) {
+                return false;
+            }
+
+            if (item.items) {
+                item.items = this.filterMenuByRole(item.items, role);
+            }
+            return true;
+        });
     }
 }
