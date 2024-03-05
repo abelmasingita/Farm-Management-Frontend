@@ -13,3 +13,11 @@ export interface IUser {
     isActive?: boolean;
     _id?: string;
 }
+
+export enum Roles {
+    ADMINISTRATOR = 'Admin',
+    EMPLOYEE = 'Employee',
+    MANAGER = 'Manager',
+    GUEST = 'Guest',
+}
+   

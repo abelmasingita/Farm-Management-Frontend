@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { catchError, tap, throwError } from 'rxjs';
 import { SessionService } from './session.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Roles } from '../utils/IUser.Management';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
     providedIn: 'root',
@@ -49,5 +51,20 @@ export class AuthService {
             this.isLoggedIn = false;
         }
         return !!this.isLoggedIn;
+    }
+
+    getUserRole(): Roles {
+        const token = this.cookieService.get('jwt');
+        const user = jwtDecode<any>(token);
+
+        if (user?.role === 'Admin') {
+            return Roles.ADMINISTRATOR;
+        } else if (user?.role === 'Manager') {
+            return Roles.MANAGER;
+        } else if (user?.role === 'Employee') {
+            return Roles.EMPLOYEE;
+        } else {
+            return Roles.GUEST;
+        }
     }
 }
