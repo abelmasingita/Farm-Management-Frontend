@@ -35,11 +35,15 @@ export class FarmlistComponent implements OnInit {
         this.farmService.getFams().subscribe((data) => (this.farms = data));
 
         this.cols = [
-            { field: 'name', header: 'Product' },
-            { field: 'location', header: 'Price' },
-            { field: 'owner', header: 'Category' },
-            { field: 'contactInformation', header: 'Reviews' },
-            { field: 'size', header: 'Status' },
+            { field: 'name', header: 'Name', sortable: true },
+            { field: 'location', header: 'Location', sortable: true },
+            { field: 'owner', header: 'Owner', sortable: true },
+            {
+                field: 'contactInformation',
+                header: 'Contact Information',
+                sortable: true,
+            },
+            { field: 'size', header: 'Size', sortable: true },
         ];
     }
 
@@ -133,4 +137,24 @@ export class FarmlistComponent implements OnInit {
             'contains'
         );
     }
+
+    handleEditRow(rowData: any) {
+        // Handle the edit row event
+        /*console.log('Edit row event:', rowData);
+        this.farmService
+        .updateFarm(this.farm._id, this.farm)
+        .subscribe();
+
+        this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Farm Updated',
+            life: 3000,
+        });*/
+     }
+    
+     handleDeleteRow(rowData: any) {
+        // Handle the delete row event
+        console.log('Delete row event:', rowData);
+     }
 }
