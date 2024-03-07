@@ -25,15 +25,32 @@ export class DynamicTableComponent implements OnInit {
     @Output() editRowEvent = new EventEmitter<any>();
     @Output() deleteRowEvent = new EventEmitter<any>();
 
+    deleteItemsDialog: boolean = false;
+    deleteItemDialog: boolean = false;
+    rowDialog: boolean = false;
+    rowData: any = {};
     constructor() {}
 
     ngOnInit() {}
 
     editRow(rowData: any) {
-        this.editRowEvent.emit(rowData);
+        this.rowData = { ...rowData };
+        this.rowDialog = true;
+    }
+    openNew() {
+        this.rowDialog = true;
+    }
+    deleteRow(rowData: any) {
+        this.rowData = { ...rowData };
+        this.deleteItemDialog = true;
     }
 
-    deleteRow(rowData: any) {
-        this.deleteRowEvent.emit(rowData);
+    confirmDelete() {
+        this.deleteRowEvent.emit(this.rowData);
+        this.deleteItemDialog = false;
+        this.rowData = {};
+        this.dataSource = this.dataSource.filter(
+            (val) => val?._id !== this.rowData?._id
+        );
     }
 }

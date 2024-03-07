@@ -81,20 +81,6 @@ export class FarmlistComponent implements OnInit {
         this.selectedFarms = [];
     }
 
-    confirmDelete() {
-        this.deleteFarmDialog = false;
-        this.farmService.deleteFarm(this.farm._id).subscribe();
-
-        this.farms = this.farms.filter((val) => val?._id !== this.farm._id);
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Farm Deleted',
-            life: 3000,
-        });
-        this.farm = {};
-    }
-
     hideDialog() {
         this.farmDialog = false;
         this.submitted = false;
@@ -154,7 +140,13 @@ export class FarmlistComponent implements OnInit {
      }
     
      handleDeleteRow(rowData: any) {
-        // Handle the delete row event
-        console.log('Delete row event:', rowData);
+         //this.farmService.deleteFarm(rowData?._id).subscribe();
+
+         this.messageService.add({
+             severity: 'success',
+             summary: 'Successful',
+             detail: 'Farm Deleted',
+             life: 3000,
+         });
      }
 }

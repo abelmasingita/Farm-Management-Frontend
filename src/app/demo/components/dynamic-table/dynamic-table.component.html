@@ -50,7 +50,7 @@
         </div>
 
         <!--
-        <p-dialog [(visible)]="farmDialog" [style]="{width: '450px'}" header="Farm Details" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="rowDialog" [style]="{width: '450px'}" header="Farm Details" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
                 <div class="field">
                     <label for="name">Name</label>
@@ -84,27 +84,27 @@
                 <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveFarm()"></button>
             </ng-template>
         </p-dialog>
-
-        <p-dialog [(visible)]="deleteFarmDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+-->  
+        <p-dialog [(visible)]="deleteItemDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="farm">Are you sure you want to Delete <b>{{farm.name}}</b>?</span>
+                <span >Are you sure you want to delete</span>
             </div>
             <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteFarmDialog = false"></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteItemDialog = false"></button>
                 <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="deleteFarmsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+        <p-dialog [(visible)]="deleteItemsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected Farm?</span>
+                <span>Are you sure you want to delete selected?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteItemsDialog = false"></button>
                 <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
             </ng-template>
-        </p-dialog> -->   
+        </p-dialog>  
     </div>
 </div>

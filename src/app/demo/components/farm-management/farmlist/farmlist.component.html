@@ -1,6 +1,5 @@
 
 <app-dynamic-table 
-[dataSource]="farms" [columns]="cols" selectionMode="multiple" [title]="'Farm Management'"  
-[rowHover]="true" [rowsPerPageOptions]="rowsPerPageOptions"
- (editRowEvent)="handleEditRow($event)" (deleteRowEvent)="handleDeleteRow($event)">
+[dataSource]="farms" [columns]="cols" [title]="'Farm Management'"  
+(editRowEvent)="handleEditRow($event)" (deleteRowEvent)="handleDeleteRow($event)">
 </app-dynamic-table>
