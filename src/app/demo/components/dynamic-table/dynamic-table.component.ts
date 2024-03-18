@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IColumn } from '../../utils/IColumns';
 
 @Component({
     selector: 'app-dynamic-table',
@@ -6,7 +7,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class DynamicTableComponent implements OnInit {
     @Input() dataSource: any[] = [];
-    @Input() columns: any[] = [];
+    @Input() selectOptions: any[] = [];
+    @Input() columns: IColumn[] = [];
     @Input() selectionMode: string = 'multiple';
     @Input() selection: any[] = [];
     @Input() rowHover: boolean = true;
@@ -22,13 +24,15 @@ export class DynamicTableComponent implements OnInit {
     @Input() responsiveLayout: string = 'scroll';
     @Input() title: string;
 
-    @Output() editRowEvent = new EventEmitter<any>();
     @Output() deleteRowEvent = new EventEmitter<any>();
+    @Output() saveRowEvent = new EventEmitter<any>();
 
     deleteItemsDialog: boolean = false;
     deleteItemDialog: boolean = false;
     rowDialog: boolean = false;
     rowData: any = {};
+    selectedOption: any = {};
+    selectedDate: Date = null;
     constructor() {}
 
     ngOnInit() {}
@@ -39,10 +43,24 @@ export class DynamicTableComponent implements OnInit {
     }
     openNew() {
         this.rowDialog = true;
+        this.rowData = {};
     }
     deleteRow(rowData: any) {
         this.rowData = { ...rowData };
         this.deleteItemDialog = true;
+    }
+
+    saveRow() {
+        const data = {
+            selectedOption: this.selectedOption,
+            rowData: this.rowData,
+        };
+        this.saveRowEvent.emit(data);
+        this.rowDialog = false;
+    }
+
+    hideDialog() {
+        this.rowDialog = false;
     }
 
     confirmDelete() {

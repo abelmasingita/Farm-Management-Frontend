@@ -25,6 +25,12 @@
       }
     ],
     "disown-opener": "off",
-    "typescript-config/strict": "off"
+    "typescript-config/strict": "off",
+    "axe/forms": [
+      "default",
+      {
+        "label": "off"
+      }
+    ]
   }
 }

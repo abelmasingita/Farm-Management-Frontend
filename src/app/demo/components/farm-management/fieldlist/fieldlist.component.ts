@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
 import { FarmService } from 'src/app/demo/service/farm.service';
 import { FieldService } from 'src/app/demo/service/field.service';
+import { IColumn } from 'src/app/demo/utils/IColumns';
 import { IFarm, IField } from 'src/app/demo/utils/IFarm.Management';
+import { forkJoin, map } from 'rxjs';
 
 @Component({
     templateUrl: './fieldlist.component.html',
@@ -11,23 +12,8 @@ import { IFarm, IField } from 'src/app/demo/utils/IFarm.Management';
 })
 export class FieldlistComponent implements OnInit {
     fields: IField[] = [];
-    field: IField = {};
     farms: IFarm[] = [];
-
-    fieldDialog: boolean = false;
-
-    deleteFieldDialog: boolean = false;
-
-    deleteFieldsDialog: boolean = false;
-
-    selectedFields: IField[] = [];
-    selectedFarm: IField = {};
-
-    submitted: boolean = false;
-
-    cols: any[] = [];
-
-    rowsPerPageOptions = [5, 10, 20];
+    cols: IColumn[] = [];
 
     constructor(
         private messageService: MessageService,
@@ -36,112 +22,55 @@ export class FieldlistComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.fieldService.getFields().subscribe((data) => (this.fields = data));
-        this.farmService.getFams().subscribe((data) => (this.farms = data));
+        forkJoin({
+            farms: this.farmService.getFams(),
+            fields: this.fieldService.getFields(),
+        })
+            .pipe(
+                map(({ farms, fields }) => {
+                    const updatedFields = fields.map((field) => {
+                        const farm = farms.find((f) => f._id === field.farmId);
+                        return {
+                            ...field,
+                            farmId: farm ? farm.name : 'Unknown',
+                        };
+                    });
+                    return { farms, updatedFields };
+                })
+            )
+            .subscribe(({ farms, updatedFields }) => {
+                this.fields = updatedFields;
+                this.farms = farms;
+            });
 
         this.cols = [
-            { field: 'name', header: 'Name' },
-            { field: 'cropType', header: 'CropType' },
-            { field: 'size', header: 'Size' },
-            { field: 'soilType', header: 'SoilType' },
-            { field: 'irrigationMethod', header: 'IrrigationMethod' },
+            { field: 'farmId', header: 'Farm', type: 'select' },
+            { field: 'name', header: 'Name', type: 'text' },
+            { field: 'cropType', header: 'Crop Type', type: 'text' },
+            { field: 'size', header: 'Size', type: 'number' },
+            { field: 'soilType', header: 'Soil Type', type: 'text' },
+            {
+                field: 'irrigationMethod',
+                header: 'Irrigation Method',
+                type: 'text',
+            },
         ];
     }
 
-    getFarmName(farmId: string): string {
-        const farm = this.farms.find((farm) => farm._id === farmId);
-        return farm ? farm.name : 'N/A';
+    handleDeleteRow(data: any) {
+        this.fieldService.deleteField(data?._id).subscribe();
     }
 
-    openNew() {
-        this.field = {};
-        this.submitted = false;
-        this.fieldDialog = true;
-    }
+    handleSaveRow(data: any) {
+        const payload = {
+            ...data?.rowData,
+            farmId: data.rowData?.farmId?._id,
+        };
 
-    deleteSelectedFields() {
-        this.deleteFieldsDialog = true;
-    }
-
-    editField(field: IField) {
-        this.field = { ...field };
-        this.fieldDialog = true;
-    }
-
-    deleteField(field: IField) {
-        this.deleteFieldDialog = true;
-        this.field = { ...field };
-    }
-
-    confirmDeleteSelected() {
-        this.deleteFieldsDialog = false;
-        this.fields = this.fields.filter(
-            (val) => !this.selectedFields.includes(val)
-        );
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'field Deleted',
-            life: 3000,
-        });
-        this.selectedFields = [];
-    }
-
-    confirmDelete() {
-        this.deleteFieldDialog = false;
-        this.fieldService.deleteField(this.field._id).subscribe();
-
-        this.fields = this.fields.filter((val) => val?._id !== this.field._id);
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Farm Deleted',
-            life: 3000,
-        });
-        this.field = {};
-    }
-
-    hideDialog() {
-        this.fieldDialog = false;
-        this.submitted = false;
-    }
-
-    saveFarm() {
-        this.submitted = true;
-        this.field.farmId = this.selectedFarm._id;
-
-        if (this.field.name?.trim()) {
-            if (this.field._id) {
-                this.fieldService
-                    .updateField(this.field._id.toString(), this.field)
-                    .subscribe();
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Field Updated',
-                    life: 3000,
-                });
-            } else {
-                this.fieldService.createField(this.field).subscribe();
-
-                // @ts-ignore
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Field Created',
-                    life: 3000,
-                });
-            }
-
-            this.fields = [...this.fields];
-            this.fieldDialog = false;
-            this.field = {};
+        if (data.rowData?._id) {
+            this.fieldService.updateField(payload?._id, payload).subscribe();
+        } else {
+            this.fieldService.createField(payload).subscribe();
         }
-    }
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal(
-            (event.target as HTMLInputElement).value,
-            'contains'
-        );
     }
 }

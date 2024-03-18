@@ -35,15 +35,26 @@ export class FarmlistComponent implements OnInit {
         this.farmService.getFams().subscribe((data) => (this.farms = data));
 
         this.cols = [
-            { field: 'name', header: 'Name', sortable: true },
-            { field: 'location', header: 'Location', sortable: true },
-            { field: 'owner', header: 'Owner', sortable: true },
+            { field: 'name', header: 'Name', sortable: true, type: 'text' },
+            {
+                field: 'location',
+                header: 'Location',
+                sortable: true,
+                type: 'text',
+            },
+            { field: 'owner', header: 'Owner', sortable: true, type: 'text' },
             {
                 field: 'contactInformation',
                 header: 'Contact Information',
                 sortable: true,
+                type: 'text',
             },
-            { field: 'size', header: 'Size', sortable: true },
+            {
+                field: 'size',
+                header: 'Size (Meters)',
+                sortable: true,
+                type: 'number',
+            },
         ];
     }
 

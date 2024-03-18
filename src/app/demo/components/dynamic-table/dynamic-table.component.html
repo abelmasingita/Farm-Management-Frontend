@@ -38,7 +38,12 @@
                             <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                         </td>
                         <td *ngFor="let col of columns">
-                            {{rowData[col.field]}}
+                            <ng-container *ngIf="col.type == 'date'; else elseBlock">
+                                <div>{{rowData[col.field] | date}}</div>
+                            </ng-container>
+                            <ng-template #elseBlock>
+                                {{rowData[col.field]}}
+                            </ng-template>
                         </td>
                         <td> 
                             <button *ngIf="showEditButton" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editRow(rowData)"></button>
@@ -49,42 +54,26 @@
             </p-table>
         </div>
 
-        <!--
-        <p-dialog [(visible)]="rowDialog" [style]="{width: '450px'}" header="Farm Details" [modal]="true" class="p-fluid">
+ 
+        <p-dialog [(visible)]="rowDialog" [style]="{width: '450px'}" header="{{title}} Details" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
-                <div class="field">
-                    <label for="name">Name</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="farm.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !farm.name}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !farm.name">Name is required.</small>
-                </div>
-                <div class="field">
-                    <label for="name">Location</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="farm.location" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !farm.location}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !farm.location">Location is required.</small>
-                </div>
-                <div class="field">
-                    <label for="name">Size</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="farm.size" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !farm.size}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !farm.name">Size is required.</small>
-                </div>
-                <div class="field">
-                    <label for="name">Owner</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="farm.owner" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !farm.owner}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !farm.owner">Owner is required.</small>
-                </div>
-                <div class="field">
-                    <label for="name">Contact Information</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="farm.contactInformation" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !farm.contactInformation}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !farm.contactInformation">Contact Information is required.</small>
+                <div class="field" *ngFor="let col of columns">
+                    <label for="name">{{col.header}}</label>
+
+                    <p-inputNumber *ngIf="col.type == 'number'" [min]="0" inputId="integeronly" [(ngModel)]="rowData[col.field]" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !col.field}"> </p-inputNumber>
+                    <input *ngIf="col.type == 'text'" type="text" pInputText id="{{col.field}}" [(ngModel)]="rowData[col.field]" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !col.field}"/>
+                    <p-dropdown *ngIf="col.type == 'select'" [options]="selectOptions"  [(ngModel)]="rowData[col.field]" optionLabel="name" [showClear]="true" placeholder="Select"></p-dropdown>
+                    <p-calendar *ngIf="col.type == 'date'"  [(ngModel)]="rowData[col.field]" dateFormat="dd.mm.yy"></p-calendar>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !col.field">{{col.header}} is required.</small>
                 </div>
             </ng-template>
 
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveFarm()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveRow()"></button>
             </ng-template>
         </p-dialog>
--->  
+
         <p-dialog [(visible)]="deleteItemDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>

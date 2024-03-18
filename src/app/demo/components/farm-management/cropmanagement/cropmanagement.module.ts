@@ -17,6 +17,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
+import { DynamicTableModule } from '../../dynamic-table/dynamic-table.module';
 
 @NgModule({
     imports: [
@@ -37,6 +38,7 @@ import { CalendarModule } from 'primeng/calendar';
         InputNumberModule,
         DialogModule,
         CalendarModule,
+        DynamicTableModule,
     ],
     declarations: [CropmanagementComponent],
 })

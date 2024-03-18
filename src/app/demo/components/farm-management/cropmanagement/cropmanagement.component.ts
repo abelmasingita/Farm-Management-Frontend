@@ -38,11 +38,10 @@ export class CropmanagementComponent implements OnInit {
         this.cropservice.getCrops().subscribe((data) => (this.crops = data));
 
         this.cols = [
-            { field: 'Crop', header: 'Crop' },
-            { field: 'price', header: 'Price' },
-            { field: 'category', header: 'Category' },
-            { field: 'rating', header: 'Reviews' },
-            { field: 'inventoryStatus', header: 'Status' },
+            { field: 'name', header: 'Name',type: 'text' },
+            { field: 'variety', header: 'Variety' ,type: 'text'},
+            { field: 'planting_date', header: 'Planting Date' ,type: 'date'},
+            { field: 'harvest_date', header: 'Harvest Date',type: 'date' },
         ];
     }
 
@@ -134,5 +133,31 @@ export class CropmanagementComponent implements OnInit {
             (event.target as HTMLInputElement).value,
             'contains'
         );
+    }
+
+    handleEditRow(rowData: any) {
+        // Handle the edit row event
+        /*console.log('Edit row event:', rowData);
+        this.farmService
+        .updateFarm(this.farm._id, this.farm)
+        .subscribe();
+
+        this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Farm Updated',
+            life: 3000,
+        });*/
+    }
+
+    handleDeleteRow(rowData: any) {
+        //this.farmService.deleteFarm(rowData?._id).subscribe();
+
+        this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Farm Deleted',
+            life: 3000,
+        });
     }
 }
