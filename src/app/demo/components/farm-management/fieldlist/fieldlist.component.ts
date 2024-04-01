@@ -32,7 +32,7 @@ export class FieldlistComponent implements OnInit {
                         const farm = farms.find((f) => f._id === field.farmId);
                         return {
                             ...field,
-                            farmId: farm ? farm.name : 'Unknown',
+                            farmId: farm ? farm.name : '',
                         };
                     });
                     return { farms, updatedFields };

@@ -1,147 +1,90 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
-import { FarmService } from 'src/app/demo/service/farm.service';
+import { TaskService } from 'src/app/demo/service/task.service';
+import { IEmployee, ITask } from 'src/app/demo/utils/IEmployee.Management';
+import { forkJoin, map } from 'rxjs';
 import { FieldService } from 'src/app/demo/service/field.service';
-import { IFarm, IField } from 'src/app/demo/utils/IFarm.Management';
-
+import { EmployeeService } from 'src/app/demo/service/employee.service';
+import { IField } from 'src/app/demo/utils/IFarm.Management';
 @Component({
     templateUrl: './task.component.html',
     providers: [MessageService],
 })
 export class TaskComponent implements OnInit {
+    tasks: ITask[] = [];
+    employees: IEmployee[] = [];
     fields: IField[] = [];
-    field: IField = {};
-    farms: IFarm[] = [];
-
-    fieldDialog: boolean = false;
-
-    deleteFieldDialog: boolean = false;
-
-    deleteFieldsDialog: boolean = false;
-
-    selectedFields: IField[] = [];
-    selectedFarm: IField = {};
-
-    submitted: boolean = false;
-
+    task: ITask = {};
     cols: any[] = [];
-
-    rowsPerPageOptions = [5, 10, 20];
 
     constructor(
         private messageService: MessageService,
+        private taskService: TaskService,
         private fieldService: FieldService,
-        private farmService: FarmService
+        private employeeService: EmployeeService
     ) {}
 
     ngOnInit() {
-        this.fieldService.getFields().subscribe((data) => (this.fields = data));
-        this.farmService.getFams().subscribe((data) => (this.farms = data));
+        forkJoin({
+            employees: this.employeeService.getEmployees(),
+            fields: this.fieldService.getFields(),
+            tasks: this.taskService.getTasks(),
+        })
+            .pipe(
+                map(({ tasks, fields, employees }) => {
+                    const updatedTasks = tasks.map((task) => {
+                        const field = fields.find(
+                            (f) => f._id === task?.field_id
+                        );
+                        const employee = employees.find(
+                            (e) => e._id === task?.employee_id
+                        );
+
+                        return {
+                            ...task,
+                            field_id: field ? field?.name : '',
+                            employee_id: employee ? employee?.name : '',
+                        };
+                    });
+                    return { updatedTasks, fields, employees };
+                })
+            )
+            .subscribe(({ fields, updatedTasks, employees }) => {
+                this.fields = fields;
+                this.employees = employees;
+                this.tasks = updatedTasks;
+            });
 
         this.cols = [
-            { field: 'name', header: 'Name' },
-            { field: 'cropType', header: 'CropType' },
-            { field: 'size', header: 'Size' },
-            { field: 'soilType', header: 'SoilType' },
-            { field: 'irrigationMethod', header: 'IrrigationMethod' },
+            { field: 'name', header: 'Name', type: 'text' },
+            { field: 'description', header: 'Description', type: 'text' },
+            { field: 'status', header: 'Status', type: 'text' },
+            { field: 'task_date', header: 'Date', type: 'date' },
+            { field: 'field_id', header: 'Field', type: 'select' },
+            { field: 'employee_id', header: 'Employee', type: 'select' },
         ];
     }
 
-    getFarmName(farmId: string): string {
-        const farm = this.farms.find((farm) => farm._id === farmId);
-        return farm ? farm.name : 'N/A';
-    }
+    handleSaveRow(data: any) {
+        const payload = {
+            ...data?.rowData,
+        };
 
-    openNew() {
-        this.field = {};
-        this.submitted = false;
-        this.fieldDialog = true;
-    }
-
-    deleteSelectedFields() {
-        this.deleteFieldsDialog = true;
-    }
-
-    editField(field: IField) {
-        this.field = { ...field };
-        this.fieldDialog = true;
-    }
-
-    deleteField(field: IField) {
-        this.deleteFieldDialog = true;
-        this.field = { ...field };
-    }
-
-    confirmDeleteSelected() {
-        this.deleteFieldsDialog = false;
-        this.fields = this.fields.filter(
-            (val) => !this.selectedFields.includes(val)
-        );
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'field Deleted',
-            life: 3000,
-        });
-        this.selectedFields = [];
-    }
-
-    confirmDelete() {
-        this.deleteFieldDialog = false;
-        this.fieldService.deleteField(this.field._id).subscribe();
-
-        this.fields = this.fields.filter((val) => val?._id !== this.field._id);
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Farm Deleted',
-            life: 3000,
-        });
-        this.field = {};
-    }
-
-    hideDialog() {
-        this.fieldDialog = false;
-        this.submitted = false;
-    }
-
-    saveFarm() {
-        this.submitted = true;
-        this.field.farmId = this.selectedFarm._id;
-
-        if (this.field.name?.trim()) {
-            if (this.field._id) {
-                this.fieldService
-                    .updateField(this.field._id.toString(), this.field)
-                    .subscribe();
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Field Updated',
-                    life: 3000,
-                });
-            } else {
-                this.fieldService.createField(this.field).subscribe();
-
-                // @ts-ignore
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Field Created',
-                    life: 3000,
-                });
-            }
-
-            this.fields = [...this.fields];
-            this.fieldDialog = false;
-            this.field = {};
+        if (data.rowData?._id) {
+            this.taskService.updateTask(payload?._id, payload).subscribe();
+        } else {
+            this.taskService.createTask(payload).subscribe();
         }
     }
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal(
-            (event.target as HTMLInputElement).value,
-            'contains'
-        );
+
+    handleDeleteRow(rowData: any) {
+        this.taskService.deleteTask(rowData?._id).subscribe();
+
+        this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Task Deleted',
+            life: 3000,
+        });
     }
 }

@@ -1,5 +1,5 @@
 
 <app-dynamic-table 
 [dataSource]="crops" [columns]="cols" [title]="'Crop Management'"  
-(editRowEvent)="handleEditRow($event)" (deleteRowEvent)="handleDeleteRow($event)">
+(saveRowEvent)="handleSaveRow($event)" (deleteRowEvent)="handleDeleteRow($event)">
 </app-dynamic-table>
